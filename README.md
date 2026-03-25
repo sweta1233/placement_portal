@@ -199,17 +199,76 @@ Scheduled jobs:
 
 ---
 
-## Database Schema (ER Summary)
+## Database Schema (ER Diagram)
 
-```
-users (id, username, email, password_hash, role, is_active, is_blacklisted)
-  └── student_profiles (user_id FK, full_name, roll_number, department, branch, year, cgpa, phone, resume, skills)
-  └── company_profiles (user_id FK, company_name, hr_name, industry, approval_status, website)
-        └── placement_drives (company_id FK, drive_name, job_title, eligibility_*, deadline, status)
-              └── applications (student_id FK, drive_id FK, status, interview_date, remarks)
-export_jobs (student_id FK, status, file_path)
-```
+```mermaid
+erDiagram
 
+    USERS {
+        int id PK
+        string username
+        string email
+        string password_hash
+        string role
+        boolean is_active
+        boolean is_blacklisted
+    }
+
+    STUDENT_PROFILES {
+        int user_id FK
+        string full_name
+        string roll_number
+        string department
+        string branch
+        int year
+        float cgpa
+        string phone
+        string resume
+        string skills
+    }
+
+    COMPANY_PROFILES {
+        int user_id FK
+        string company_name
+        string hr_name
+        string industry
+        string approval_status
+        string website
+    }
+
+    PLACEMENT_DRIVES {
+        int id PK
+        int company_id FK
+        string drive_name
+        string job_title
+        string eligibility_criteria
+        datetime deadline
+        string status
+    }
+
+    APPLICATIONS {
+        int id PK
+        int student_id FK
+        int drive_id FK
+        string status
+        datetime interview_date
+        string remarks
+    }
+
+    EXPORT_JOBS {
+        int id PK
+        int student_id FK
+        string status
+        string file_path
+    }
+
+    USERS ||--|| STUDENT_PROFILES : has
+    USERS ||--|| COMPANY_PROFILES : has
+    COMPANY_PROFILES ||--o{ PLACEMENT_DRIVES : creates
+    STUDENT_PROFILES ||--o{ APPLICATIONS : applies
+    PLACEMENT_DRIVES ||--o{ APPLICATIONS : receives
+    STUDENT_PROFILES ||--o{ EXPORT_JOBS : generates
+```
 ---
 
 ## Folder Structure for Vue Build (optional)
