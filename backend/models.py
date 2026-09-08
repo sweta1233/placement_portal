@@ -7,8 +7,9 @@ import os
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
+_default_dir = '/tmp' if os.environ.get('VERCEL') else os.path.join(os.path.dirname(os.path.dirname(__file__)), 'instance')
 DB_PATH = os.path.join(
-    os.environ.get('INSTANCE_DIR', os.path.join(os.path.dirname(os.path.dirname(__file__)), 'instance')),
+    os.environ.get('INSTANCE_DIR', _default_dir),
     'placement_portal.db'
 )
 

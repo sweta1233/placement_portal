@@ -12,9 +12,3 @@ services:
         generateValue: true
       - key: ADMIN_EMAIL
         value: admin@placement.edu
-      - key: INSTANCE_DIR
-        value: /opt/render/project/data
-    disk:
-      name: placement-portal-data
-      mountPath: /opt/render/project/data
-      sizeGB: 1
