@@ -24,27 +24,38 @@ A full-stack Campus Recruitment System built with **Flask** (backend) + **Vue 3*
 ### 1. Install dependencies
 
 ```bash
-pip install Flask PyJWT Werkzeug python-dotenv reportlab requests
-# Optional (for Celery/Redis):
-pip install celery redis flask-caching flask-cors flask-mail
+pip install -r requirements.txt
 ```
 
 ### 2. Configure environment
 
-Copy `.env` and edit as needed:
+Copy the example env file and edit secrets before deploying:
 ```bash
-cp .env .env.local  # edit MAIL_USERNAME etc.
+cp .env.example .env   # edit SECRET_KEY, JWT_SECRET_KEY, MAIL_* etc.
 ```
+A working `.env` with safe dev defaults is already included so the app runs out of the box locally.
 
 ### 3. Run the server
 
+**Local development:**
 ```bash
 python run.py
 # or
 python app.py
 ```
 
+**Production (gunicorn):**
+```bash
+gunicorn -w 2 -b 0.0.0.0:$PORT "app:create_app()"
+```
+
 Open **http://localhost:5000**
+
+### 4. One-click deploy
+
+- **Render.com**: push this repo and Render will auto-detect `render.yaml`.
+- **Heroku / Railway**: the included `Procfile` works out of the box.
+- Any Python host: just run the gunicorn command above; the SQLite DB and `uploads/` folder are auto-created under `instance/` and `uploads/` on first run.
 
 ---
 
@@ -62,12 +73,16 @@ Admin is pre-seeded automatically on first run.
 
 ```
 placement_portal/
-├── app.py                  # Flask app factory
+├── app.py                  # Flask app factory (serves API + SPA + /assets)
 ├── run.py                  # Convenience runner
 ├── config.py               # Configuration
 ├── celery_worker.py        # Celery entry point
 ├── requirements.txt
-├── .env                    # Environment variables
+├── Procfile                # Heroku/Railway deploy command
+├── render.yaml             # Render.com one-click deploy config
+├── .env                    # Local dev environment variables (safe defaults)
+├── .env.example            # Template for production secrets
+├── .gitignore
 │
 ├── backend/
 │   ├── models.py           # SQLite schema + helpers
@@ -82,13 +97,25 @@ placement_portal/
 │       └── pdf_report.py   # ReportLab PDF builder
 │
 ├── frontend_embedded/
-│   └── index.html          # Single-file Vue 3 SPA
+│   ├── index.html          # Single-file Vue 3 SPA (no build step needed)
+│   └── assets/             # Role-specific dashboard background images
+│       ├── bg-login.jpg
+│       ├── bg-admin.jpg
+│       ├── bg-company.jpg
+│       └── bg-student.jpg
 │
-├── instance/
-│   └── placement_portal.db # SQLite database (auto-created)
-│
-└── uploads/                # Uploaded resumes + CSV exports
+├── instance/                # SQLite database (auto-created at runtime)
+└── uploads/                  # Uploaded resumes + CSV exports (auto-created)
 ```
+
+> The previous `frontend/` Vue-CLI scaffold (unused/unbuilt, not wired to the backend) and an empty stray folder from a packaging error have been removed to keep the project lean and deploy-ready.
+
+### Dashboard backgrounds
+Each role gets its own low-opacity background image behind the dashboard content (cards stay solid/white so text remains fully readable):
+- **Login page** – welcoming collaborative workspace scene
+- **Admin** – executive office / skyline
+- **Company** – corporate campus
+- **Student** – vibrant student collaboration space
 
 ---
 
@@ -199,76 +226,17 @@ Scheduled jobs:
 
 ---
 
-## Database Schema (ER Diagram)
+## Database Schema (ER Summary)
 
-```mermaid
-erDiagram
-
-    USERS {
-        int id PK
-        string username
-        string email
-        string password_hash
-        string role
-        boolean is_active
-        boolean is_blacklisted
-    }
-
-    STUDENT_PROFILES {
-        int user_id FK
-        string full_name
-        string roll_number
-        string department
-        string branch
-        int year
-        float cgpa
-        string phone
-        string resume
-        string skills
-    }
-
-    COMPANY_PROFILES {
-        int user_id FK
-        string company_name
-        string hr_name
-        string industry
-        string approval_status
-        string website
-    }
-
-    PLACEMENT_DRIVES {
-        int id PK
-        int company_id FK
-        string drive_name
-        string job_title
-        string eligibility_criteria
-        datetime deadline
-        string status
-    }
-
-    APPLICATIONS {
-        int id PK
-        int student_id FK
-        int drive_id FK
-        string status
-        datetime interview_date
-        string remarks
-    }
-
-    EXPORT_JOBS {
-        int id PK
-        int student_id FK
-        string status
-        string file_path
-    }
-
-    USERS ||--|| STUDENT_PROFILES : has
-    USERS ||--|| COMPANY_PROFILES : has
-    COMPANY_PROFILES ||--o{ PLACEMENT_DRIVES : creates
-    STUDENT_PROFILES ||--o{ APPLICATIONS : applies
-    PLACEMENT_DRIVES ||--o{ APPLICATIONS : receives
-    STUDENT_PROFILES ||--o{ EXPORT_JOBS : generates
 ```
+users (id, username, email, password_hash, role, is_active, is_blacklisted)
+  └── student_profiles (user_id FK, full_name, roll_number, department, branch, year, cgpa, phone, resume, skills)
+  └── company_profiles (user_id FK, company_name, hr_name, industry, approval_status, website)
+        └── placement_drives (company_id FK, drive_name, job_title, eligibility_*, deadline, status)
+              └── applications (student_id FK, drive_id FK, status, interview_date, remarks)
+export_jobs (student_id FK, status, file_path)
+```
+
 ---
 
 ## Folder Structure for Vue Build (optional)

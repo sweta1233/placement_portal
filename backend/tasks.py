@@ -2,7 +2,7 @@
 Celery tasks for background jobs.
 Runs with Redis broker. Falls back gracefully if Redis is unavailable.
 """
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 
 
 def make_celery(app):
@@ -30,10 +30,10 @@ def make_celery(app):
 def send_daily_reminders():
     """Send daily reminders to students about upcoming deadlines (runs via Celery beat or cron)."""
     from backend.models import get_db, rows_to_list
-    from datetime import timedelta
     db = get_db()
-    tomorrow = (datetime.utcnow() + timedelta(days=1)).isoformat()
-    now = datetime.utcnow().isoformat()
+    now_dt = datetime.now(timezone.utc)
+    tomorrow = (now_dt + timedelta(days=1)).isoformat()
+    now = now_dt.isoformat()
     upcoming = rows_to_list(db.execute(
         "SELECT * FROM placement_drives WHERE status='approved' AND application_deadline<=? AND application_deadline>=?",
         (tomorrow, now)
@@ -64,7 +64,7 @@ def generate_monthly_report():
     """Generate monthly PDF report and (optionally) email to admin."""
     from backend.models import get_db, rows_to_list
     db = get_db()
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
     if now.month == 1:
         start = now.replace(year=now.year-1, month=12, day=1, hour=0, minute=0, second=0)
     else:

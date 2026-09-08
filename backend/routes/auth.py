@@ -1,15 +1,16 @@
 from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from backend.models import get_db, row_to_dict, rows_to_list
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from functools import wraps
 import jwt
+import sqlite3
 
 auth_bp = Blueprint('auth', __name__)
 
 def _gen_token(user_id, role, secret):
     payload = {'user_id': user_id, 'role': role,
-               'exp': datetime.utcnow() + timedelta(hours=24)}
+               'exp': datetime.now(timezone.utc) + timedelta(hours=24)}
     return jwt.encode(payload, secret, algorithm='HS256')
 
 def _verify_token(token, secret):
@@ -66,40 +67,55 @@ def register():
     role = data.get('role','student')
     if role == 'admin':
         return jsonify({'error':'Admin registration not allowed'}), 403
+    username = (data.get('username') or '').strip().lower()
+    email = (data.get('email') or '').strip().lower()
+    if not username or not email or not data.get('password'):
+        return jsonify({'error':'Username, email and password are required'}), 400
     db = get_db()
-    if db.execute("SELECT id FROM users WHERE username=?", (data['username'],)).fetchone():
+    if db.execute("SELECT id FROM users WHERE LOWER(username)=?", (username,)).fetchone():
         db.close(); return jsonify({'error':'Username already exists'}), 400
-    if db.execute("SELECT id FROM users WHERE email=?", (data['email'],)).fetchone():
+    if db.execute("SELECT id FROM users WHERE LOWER(email)=?", (email,)).fetchone():
         db.close(); return jsonify({'error':'Email already registered'}), 400
+    if role == 'student' and data.get('roll_number'):
+        rn = data.get('roll_number', '').strip()
+        if rn and db.execute("SELECT id FROM student_profiles WHERE roll_number=?", (rn,)).fetchone():
+            db.close(); return jsonify({'error':'Roll number already registered'}), 400
     ph = generate_password_hash(data['password'])
-    cur = db.execute("INSERT INTO users (username,email,password_hash,role) VALUES (?,?,?,?)",
-                     (data['username'], data['email'], ph, role))
-    user_id = cur.lastrowid
-    if role == 'student':
-        db.execute("""INSERT INTO student_profiles
-                      (user_id,full_name,roll_number,department,branch,year,cgpa,phone)
-                      VALUES (?,?,?,?,?,?,?,?)""",
-                   (user_id, data.get('full_name', data['username']),
-                    data.get('roll_number',''), data.get('department',''),
-                    data.get('branch',''), data.get('year',1),
-                    data.get('cgpa',0), data.get('phone','')))
-    elif role == 'company':
-        db.execute("""INSERT INTO company_profiles
-                      (user_id,company_name,hr_name,hr_email,hr_phone,website,description,industry)
-                      VALUES (?,?,?,?,?,?,?,?)""",
-                   (user_id, data.get('company_name', data['username']),
-                    data.get('hr_name',''), data.get('hr_email', data['email']),
-                    data.get('hr_phone',''), data.get('website',''),
-                    data.get('description',''), data.get('industry','')))
-    db.commit(); db.close()
+    try:
+        cur = db.execute("INSERT INTO users (username,email,password_hash,role) VALUES (?,?,?,?)",
+                         (username, email, ph, role))
+        user_id = cur.lastrowid
+        if role == 'student':
+            db.execute("""INSERT INTO student_profiles
+                          (user_id,full_name,roll_number,department,branch,year,cgpa,phone)
+                          VALUES (?,?,?,?,?,?,?,?)""",
+                       (user_id, data.get('full_name', username),
+                        (data.get('roll_number') or '').strip() or None, data.get('department',''),
+                        data.get('branch',''), data.get('year',1),
+                        data.get('cgpa',0), data.get('phone','')))
+        elif role == 'company':
+            db.execute("""INSERT INTO company_profiles
+                          (user_id,company_name,hr_name,hr_email,hr_phone,website,description,industry)
+                          VALUES (?,?,?,?,?,?,?,?)""",
+                       (user_id, data.get('company_name', username),
+                        data.get('hr_name',''), data.get('hr_email', email),
+                        data.get('hr_phone',''), data.get('website',''),
+                        data.get('description',''), data.get('industry','')))
+        db.commit()
+    except sqlite3.IntegrityError as e:
+        db.rollback()
+        db.close()
+        return jsonify({'error': 'A user or profile with these details already exists'}), 400
+    db.close()
     return jsonify({'message':'Registration successful'}), 201
 
 @auth_bp.route('/login', methods=['POST'])
 def login():
     from flask import current_app
-    data = request.get_json()
+    data = request.get_json() or {}
+    identifier = (data.get('username') or data.get('email') or '').strip().lower()
     db = get_db()
-    user = row_to_dict(db.execute("SELECT * FROM users WHERE username=?", (data.get('username',''),)).fetchone())
+    user = row_to_dict(db.execute("SELECT * FROM users WHERE LOWER(username)=? OR LOWER(email)=?", (identifier, identifier)).fetchone())
     if not user or not check_password_hash(user['password_hash'], data.get('password','')):
         db.close(); return jsonify({'error':'Invalid credentials'}), 401
     if not user['is_active']:

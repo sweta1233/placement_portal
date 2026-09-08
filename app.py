@@ -24,12 +24,14 @@ def create_app():
     from backend.routes.company import company_bp
     from backend.routes.student import student_bp
     from backend.routes.reports import pdf_bp
+    from backend.routes.oa      import oa_bp
 
     app.register_blueprint(auth_bp,    url_prefix='/api/auth')
     app.register_blueprint(admin_bp,   url_prefix='/api/admin')
     app.register_blueprint(company_bp, url_prefix='/api/company')
     app.register_blueprint(student_bp, url_prefix='/api/student')
     app.register_blueprint(pdf_bp,     url_prefix='/api')
+    app.register_blueprint(oa_bp,      url_prefix='/api')
 
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
@@ -42,6 +44,10 @@ def create_app():
     @app.route('/')
     def index():
         return send_from_directory(frontend_dir, 'index.html')
+
+    @app.route('/assets/<path:filename>')
+    def assets(filename):
+        return send_from_directory(os.path.join(frontend_dir, 'assets'), filename)
 
     @app.errorhandler(404)
     def not_found(e):

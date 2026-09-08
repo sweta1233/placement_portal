@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, send_from_directory, current_app
 from backend.models import get_db, row_to_dict, rows_to_list
 from backend.routes.auth import role_required
-from datetime import datetime
+from datetime import datetime, timezone
 import os, csv, threading
 
 student_bp = Blueprint('student', __name__)
@@ -52,7 +52,7 @@ def upload_resume():
     s = _get_student(u['id'], db)
     folder = current_app.config['UPLOAD_FOLDER']
     os.makedirs(folder, exist_ok=True)
-    fname = f"resume_{s['id']}_{datetime.utcnow().strftime('%Y%m%d%H%M%S')}.{ext}"
+    fname = f"resume_{s['id']}_{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}.{ext}"
     file.save(os.path.join(folder, fname))
     db.execute("UPDATE student_profiles SET resume_filename=? WHERE user_id=?", (fname, u['id']))
     db.commit(); db.close()
@@ -109,7 +109,10 @@ def apply_drive(did):
     if drive.get('application_deadline'):
         try:
             dl = datetime.fromisoformat(drive['application_deadline'])
-            if datetime.utcnow() > dl:
+            # DB stores naive UTC; make it timezone-aware for comparison
+            if dl.tzinfo is None:
+                dl = dl.replace(tzinfo=timezone.utc)
+            if datetime.now(timezone.utc) > dl:
                 db.close(); return jsonify({'error':'Deadline passed'}), 400
         except: pass
     # duplicate check

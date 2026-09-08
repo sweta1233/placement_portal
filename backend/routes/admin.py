@@ -177,9 +177,9 @@ def get_stats():
 @admin_bp.route('/report/monthly', methods=['GET'])
 @role_required('admin')
 def monthly_report():
-    from datetime import datetime
+    from datetime import datetime, timezone
     db = get_db()
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
     if now.month == 1:
         start = now.replace(year=now.year-1, month=12, day=1, hour=0, minute=0, second=0)
     else:

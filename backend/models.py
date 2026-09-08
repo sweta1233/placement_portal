@@ -7,7 +7,10 @@ import os
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
-DB_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'instance', 'placement_portal.db')
+DB_PATH = os.path.join(
+    os.environ.get('INSTANCE_DIR', os.path.join(os.path.dirname(os.path.dirname(__file__)), 'instance')),
+    'placement_portal.db'
+)
 
 def get_db():
     os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
@@ -102,7 +105,73 @@ def init_db():
         created_at TEXT DEFAULT (datetime('now')),
         completed_at TEXT
     );
+
+    CREATE TABLE IF NOT EXISTS meetings (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        application_id INTEGER NOT NULL REFERENCES applications(id) ON DELETE CASCADE,
+        company_id INTEGER NOT NULL REFERENCES company_profiles(id) ON DELETE CASCADE,
+        student_id INTEGER NOT NULL REFERENCES student_profiles(id) ON DELETE CASCADE,
+        title TEXT NOT NULL,
+        meeting_link TEXT,
+        scheduled_at TEXT NOT NULL,
+        duration_minutes INTEGER DEFAULT 30,
+        notes TEXT,
+        status TEXT DEFAULT 'scheduled',
+        created_at TEXT DEFAULT (datetime('now')),
+        updated_at TEXT DEFAULT (datetime('now')),
+        UNIQUE(application_id)
+    );
+
+    CREATE TABLE IF NOT EXISTS oa_schedules (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        drive_id INTEGER NOT NULL REFERENCES placement_drives(id) ON DELETE CASCADE,
+        company_id INTEGER NOT NULL REFERENCES company_profiles(id) ON DELETE CASCADE,
+        title TEXT NOT NULL,
+        question_source TEXT DEFAULT 'leetcode',
+        scheduled_at TEXT NOT NULL,
+        duration_minutes INTEGER DEFAULT 90,
+        instructions TEXT,
+        status TEXT DEFAULT 'scheduled',
+        created_at TEXT DEFAULT (datetime('now'))
+    );
+
+    CREATE TABLE IF NOT EXISTS oa_questions (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        oa_id INTEGER NOT NULL REFERENCES oa_schedules(id) ON DELETE CASCADE,
+        difficulty TEXT NOT NULL,
+        title TEXT NOT NULL,
+        description TEXT,
+        link TEXT,
+        created_at TEXT DEFAULT (datetime('now'))
+    );
+
+    CREATE TABLE IF NOT EXISTS oa_attempts (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        oa_id INTEGER NOT NULL REFERENCES oa_schedules(id) ON DELETE CASCADE,
+        student_id INTEGER NOT NULL REFERENCES student_profiles(id) ON DELETE CASCADE,
+        status TEXT DEFAULT 'not_started',
+        questions_json TEXT,
+        responses_json TEXT,
+        score INTEGER DEFAULT 0,
+        total_questions INTEGER DEFAULT 0,
+        started_at TEXT,
+        completed_at TEXT,
+        UNIQUE(oa_id, student_id)
+    );
     """)
+
+    # Defensive migration: add any columns missing on a DB created by an
+    # earlier version of this app (CREATE TABLE IF NOT EXISTS won't add
+    # columns to a table that already exists).
+    for col_def in (
+        "ALTER TABLE oa_attempts ADD COLUMN responses_json TEXT",
+        "ALTER TABLE oa_attempts ADD COLUMN score INTEGER DEFAULT 0",
+        "ALTER TABLE oa_attempts ADD COLUMN total_questions INTEGER DEFAULT 0",
+    ):
+        try:
+            c.execute(col_def)
+        except sqlite3.OperationalError:
+            pass
     conn.commit()
     conn.close()
 

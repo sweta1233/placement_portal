@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: placement-portal
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -w 2 -b 0.0.0.0:$PORT "app:create_app()"
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: ADMIN_EMAIL
+        value: admin@placement.edu
+      - key: INSTANCE_DIR
+        value: /opt/render/project/data
+    disk:
+      name: placement-portal-data
+      mountPath: /opt/render/project/data
+      sizeGB: 1

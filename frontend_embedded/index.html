@@ -32,10 +32,22 @@ body{background:var(--bg);font-family:'Segoe UI',system-ui,sans-serif;}
 .badge-shortlisted{background:#fef9c3;color:#854d0e;}
 .badge-selected{background:#dcfce7;color:#166534;}
 .badge-waiting{background:#e0e7ff;color:#3730a3;}
+.badge-diff-easy{background:#d1fae5;color:#065f46;}
+.badge-diff-medium{background:#fef9c3;color:#854d0e;}
+.badge-diff-hard{background:#fee2e2;color:#991b1b;}
+.oa-window-open{border-left:4px solid var(--success);}
+.oa-window-upcoming{border-left:4px solid var(--secondary);}
+.oa-window-expired{border-left:4px solid var(--danger);opacity:.75;}
+.oa-question-card{border:1px solid #e2e8f0;border-radius:12px;padding:18px;}
 .drive-card{border-left:4px solid var(--primary);transition:.2s;}
 .drive-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.12);}
-.login-page{min-height:100vh;background:linear-gradient(135deg,#1e3a5f 0%,#2563eb 50%,#60a5fa 100%);display:flex;align-items:center;justify-content:center;}
-.login-card{background:#fff;border-radius:20px;padding:40px;width:400px;box-shadow:0 20px 60px rgba(0,0,0,.2);}
+.login-page{min-height:100vh;position:relative;background:linear-gradient(180deg,rgba(15,23,42,.35),rgba(15,23,42,.45)),url('assets/bg-login.jpg') center/cover no-repeat;display:flex;align-items:center;justify-content:center;overflow-y:auto;padding:2rem 0;}
+.login-card{background:rgba(255,255,255,.96);border-radius:20px;padding:40px;width:400px;box-shadow:0 20px 60px rgba(0,0,0,.35);backdrop-filter:blur(6px);}
+.main-content{position:relative;background-size:cover;background-position:center;background-attachment:fixed;background-repeat:no-repeat;}
+.main-content.role-admin{background-image:linear-gradient(rgba(241,245,249,.82),rgba(241,245,249,.86)),url('assets/bg-admin.jpg');}
+.main-content.role-company{background-image:linear-gradient(rgba(241,245,249,.82),rgba(241,245,249,.86)),url('assets/bg-company.jpg');}
+.main-content.role-student{background-image:linear-gradient(rgba(241,245,249,.82),rgba(241,245,249,.86)),url('assets/bg-student.jpg');}
+.page-body{position:relative;z-index:1;background:transparent;}
 .login-logo{text-align:center;margin-bottom:24px;}
 .login-logo h2{color:var(--primary);font-weight:700;}
 .btn-primary{background:var(--primary);border-color:var(--primary);}
@@ -52,6 +64,37 @@ body{background:var(--bg);font-family:'Segoe UI',system-ui,sans-serif;}
 @media(max-width:768px){.sidebar{transform:translateX(-100%);}.sidebar.open{transform:translateX(0);}.main-content{margin-left:0;}.topbar .sidebar-toggle{display:flex;}}
 .fade-enter-active,.fade-leave-active{transition:opacity .2s;}
 .fade-enter-from,.fade-leave-to{opacity:0;}
+
+/* ===== Landing Page ===== */
+.landing{min-height:100vh;background:#fff;}
+.landing-nav{position:sticky;top:0;z-index:200;background:rgba(15,23,42,.92);backdrop-filter:blur(8px);}
+.landing-nav-inner{max-width:1140px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.landing-logo{color:#fff;font-weight:700;font-size:1.15rem;}
+.landing-nav-links{gap:28px;}
+.landing-nav-links a{color:rgba(255,255,255,.8);text-decoration:none;font-size:.92rem;font-weight:500;transition:.2s;}
+.landing-nav-links a:hover{color:#fff;}
+.landing-nav-mobile{background:rgba(15,23,42,.97);display:flex;flex-direction:column;padding:8px 24px 16px;}
+.landing-nav-mobile a{color:rgba(255,255,255,.85);text-decoration:none;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08);}
+.landing-hero{position:relative;min-height:88vh;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;padding:60px 24px;background:linear-gradient(180deg,rgba(15,23,42,.72),rgba(30,58,95,.68)),url('assets/bg-login.jpg') center/cover no-repeat;}
+.landing-hero-inner{max-width:720px;}
+.landing-hero h1{font-size:clamp(2.1rem,5vw,3.4rem);font-weight:800;line-height:1.15;margin-bottom:18px;}
+.landing-hero p{font-size:1.05rem;opacity:.92;max-width:600px;margin:0 auto;}
+.landing-section{padding:72px 24px;}
+.landing-section-alt{background:#f8fafc;}
+.landing-container{max-width:1140px;margin:0 auto;}
+.section-eyebrow{color:var(--primary);font-weight:700;letter-spacing:1.5px;font-size:.78rem;margin-bottom:8px;}
+.section-title{font-weight:800;font-size:2rem;margin-bottom:14px;color:#0f172a;}
+.section-lead{color:#64748b;max-width:680px;font-size:1.02rem;}
+.feature-card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:28px 24px;height:100%;box-shadow:0 1px 4px rgba(0,0,0,.05);transition:.2s;}
+.feature-card:hover{transform:translateY(-4px);box-shadow:0 12px 24px rgba(0,0,0,.08);}
+.feature-icon{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--primary),#60a5fa);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:16px;}
+.feature-card h5{font-weight:700;margin-bottom:8px;}
+.feature-card p{color:#64748b;font-size:.92rem;margin:0;}
+.step-card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:22px 18px;height:100%;position:relative;}
+.step-num{width:32px;height:32px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;margin-bottom:12px;}
+.step-card h6{font-weight:700;margin-bottom:6px;}
+.step-card p{color:#64748b;font-size:.85rem;margin:0;}
+.landing-footer{background:#0f172a;color:rgba(255,255,255,.75);padding:22px 24px;font-size:.9rem;}
 </style>
 </head>
 <body>
@@ -79,8 +122,27 @@ const API = {
   get: (url) => API.req('GET', url),
   post: (url, d) => API.req('POST', url, d),
   put: (url, d) => API.req('PUT', url, d),
+  del: (url) => API.req('DELETE', url),
   postForm: (url, d) => API.req('POST', url, d, true),
 };
+
+// Convert a <input type="datetime-local"> value (local wall-clock, no tz)
+// into a proper UTC ISO string to send to the backend.
+function toUtcIso(localValue) {
+  if (!localValue) return '';
+  const d = new Date(localValue);
+  if (isNaN(d.getTime())) return '';
+  return d.toISOString();
+}
+// Convert a UTC ISO string (from the backend) into the local wall-clock
+// value expected by <input type="datetime-local">.
+function toLocalInputValue(isoString) {
+  if (!isoString) return '';
+  const d = new Date(isoString);
+  if (isNaN(d.getTime())) return '';
+  const pad = n => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
 
 // ==================== MAIN APP ====================
 const App = {
@@ -99,8 +161,9 @@ const App = {
 
     <!-- Auth Pages -->
     <div v-if="!user">
-      <LoginPage v-if="authPage==='login'" @login="handleLogin" @goto="authPage=$event" />
-      <RegisterPage v-else @register="handleRegister" @goto="authPage=$event" />
+      <LandingPage v-if="authPage==='landing'" @goto="goToAuth" />
+      <LoginPage v-else-if="authPage==='login'" @login="handleLogin" @goto="authPage=$event" />
+      <RegisterPage v-else :presetRole="presetRole" @register="handleRegister" @goto="authPage=$event" />
     </div>
 
     <!-- Main App -->
@@ -123,22 +186,24 @@ const App = {
             <li><a class="nav-link" :class="{active:page==='dashboard'}" href="#" @click.prevent="page='dashboard'"><i class="bi bi-speedometer2"></i>Dashboard</a></li>
             <li><a class="nav-link" :class="{active:page==='drives'}" href="#" @click.prevent="page='drives'"><i class="bi bi-briefcase"></i>My Drives</a></li>
             <li><a class="nav-link" :class="{active:page==='applications'}" href="#" @click.prevent="page='applications'"><i class="bi bi-people"></i>Applications</a></li>
+            <li><a class="nav-link" :class="{active:page==='oa'}" href="#" @click.prevent="page='oa'"><i class="bi bi-laptop"></i>Meetings & OA</a></li>
             <li><a class="nav-link" :class="{active:page==='profile'}" href="#" @click.prevent="page='profile'"><i class="bi bi-building-gear"></i>Company Profile</a></li>
           </template>
           <template v-if="user.role==='student'">
             <li><a class="nav-link" :class="{active:page==='dashboard'}" href="#" @click.prevent="page='dashboard'"><i class="bi bi-speedometer2"></i>Dashboard</a></li>
             <li><a class="nav-link" :class="{active:page==='drives'}" href="#" @click.prevent="page='drives'"><i class="bi bi-briefcase"></i>Placement Drives</a></li>
             <li><a class="nav-link" :class="{active:page==='applications'}" href="#" @click.prevent="page='applications'"><i class="bi bi-file-earmark-check"></i>My Applications</a></li>
+            <li><a class="nav-link" :class="{active:page==='oa'}" href="#" @click.prevent="page='oa'"><i class="bi bi-laptop"></i>Meetings & OA</a></li>
             <li><a class="nav-link" :class="{active:page==='history'}" href="#" @click.prevent="page='history'"><i class="bi bi-clock-history"></i>History</a></li>
             <li><a class="nav-link" :class="{active:page==='companies'}" href="#" @click.prevent="page='companies'"><i class="bi bi-building"></i>Companies</a></li>
             <li><a class="nav-link" :class="{active:page==='profile'}" href="#" @click.prevent="page='profile'"><i class="bi bi-person-circle"></i>My Profile</a></li>
           </template>
         </ul>
-        <div class="px-3 py-3 mt-auto" style="position:absolute;bottom:0;width:100%;">
+        <div class="px-3 py-3 mt-auto">
           <div class="d-flex align-items-center gap-2 p-2 rounded" style="background:rgba(255,255,255,.1);">
             <div class="avatar" style="width:32px;height:32px;font-size:.8rem;">{{user.username[0].toUpperCase()}}</div>
             <div style="flex:1;min-width:0;">
-              <div class="text-white fw-600" style="font-size:.8rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{user.username}}</div>
+              <div class="text-white fw-semibold" style="font-size:.8rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{user.username}}</div>
               <div style="font-size:.7rem;opacity:.7;color:#fff;">{{user.role}}</div>
             </div>
             <button class="btn btn-sm" style="color:rgba(255,255,255,.7);" @click="logout"><i class="bi bi-box-arrow-right"></i></button>
@@ -147,11 +212,11 @@ const App = {
       </nav>
 
       <!-- Main -->
-      <div class="main-content" style="flex:1;">
+      <div class="main-content" :class="'role-'+user.role" style="flex:1;">
         <div class="topbar">
           <div class="d-flex align-items-center gap-3">
             <button class="btn btn-sm btn-outline-secondary d-md-none" @click="sidebarOpen=!sidebarOpen"><i class="bi bi-list"></i></button>
-            <h5 class="mb-0 text-capitalize fw-600">{{pageTitle}}</h5>
+            <h5 class="mb-0 text-capitalize fw-semibold">{{pageTitle}}</h5>
           </div>
           <div class="d-flex align-items-center gap-3">
             <span class="badge rounded-pill" style="background:#dbeafe;color:#1e40af;">{{user.role.toUpperCase()}}</span>
@@ -170,11 +235,13 @@ const App = {
           <CompanyDashboard v-if="user.role==='company' && page==='dashboard'" :profile="profile" @notify="notify" />
           <CompanyDrives v-if="user.role==='company' && page==='drives'" @notify="notify" />
           <CompanyApplications v-if="user.role==='company' && page==='applications'" @notify="notify" />
+          <CompanyOA v-if="user.role==='company' && page==='oa'" @notify="notify" />
           <CompanyProfile v-if="user.role==='company' && page==='profile'" :profile="profile" @notify="notify" @updated="fetchProfile" />
           <!-- Student Pages -->
           <StudentDashboard v-if="user.role==='student' && page==='dashboard'" :profile="profile" @notify="notify" @goto="page=$event" />
           <StudentDrives v-if="user.role==='student' && page==='drives'" @notify="notify" />
           <StudentApplications v-if="user.role==='student' && page==='applications'" @notify="notify" />
+          <StudentOA v-if="user.role==='student' && page==='oa'" @notify="notify" />
           <StudentHistory v-if="user.role==='student' && page==='history'" @notify="notify" />
           <StudentCompanies v-if="user.role==='student' && page==='companies'" @notify="notify" />
           <StudentProfile v-if="user.role==='student' && page==='profile'" :profile="profile" @notify="notify" @updated="fetchProfile" />
@@ -187,12 +254,18 @@ const App = {
     const user = ref(null);
     const profile = ref(null);
     const page = ref('dashboard');
-    const authPage = ref('login');
+    const authPage = ref('landing');
+    const presetRole = ref('student');
     const notifications = ref([]);
     const sidebarOpen = ref(false);
 
+    function goToAuth(target, role) {
+      if (role) presetRole.value = role;
+      authPage.value = target;
+    }
+
     const pageTitle = computed(() => {
-      const map = { dashboard: 'Dashboard', companies: 'Companies', students: 'Students', drives: 'Placement Drives', applications: 'Applications', reports: 'Reports & Stats', profile: 'My Profile', history: 'Placement History' };
+      const map = { dashboard: 'Dashboard', companies: 'Companies', students: 'Students', drives: 'Placement Drives', applications: 'Applications', reports: 'Reports & Stats', profile: 'My Profile', history: 'Placement History', oa: 'Meetings & OA' };
       return map[page.value] || page.value;
     });
 
@@ -232,7 +305,7 @@ const App = {
       user.value = null;
       profile.value = null;
       page.value = 'dashboard';
-      authPage.value = 'login';
+      authPage.value = 'landing';
     }
 
     onMounted(async () => {
@@ -245,7 +318,139 @@ const App = {
       }
     });
 
-    return { user, profile, page, authPage, notifications, sidebarOpen, pageTitle, notify, removeNotif, handleLogin, handleRegister, fetchProfile, logout };
+    return { user, profile, page, authPage, presetRole, notifications, sidebarOpen, pageTitle, notify, removeNotif, handleLogin, handleRegister, fetchProfile, logout, goToAuth };
+  }
+};
+
+// ==================== LANDING PAGE ====================
+const LandingPage = {
+  emits: ['goto'],
+  template: `
+  <div class="landing">
+    <nav class="landing-nav">
+      <div class="landing-nav-inner">
+        <div class="landing-logo"><i class="bi bi-mortarboard-fill me-2"></i>PlacementPortal</div>
+        <div class="landing-nav-links d-none d-md-flex">
+          <a href="#about" @click="closeMenu">About</a>
+          <a href="#students" @click="closeMenu">For Students</a>
+          <a href="#companies" @click="closeMenu">For Companies</a>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <button class="btn btn-outline-light btn-sm" @click="$emit('goto','login')">Login</button>
+          <button class="btn btn-primary btn-sm d-none d-sm-inline-block" @click="$emit('goto','register','student')">Get Started</button>
+          <button class="btn btn-sm btn-outline-light d-md-none" @click="menuOpen=!menuOpen"><i class="bi bi-list"></i></button>
+        </div>
+      </div>
+      <div v-if="menuOpen" class="landing-nav-mobile d-md-none">
+        <a href="#about" @click="closeMenu">About</a>
+        <a href="#students" @click="closeMenu">For Students</a>
+        <a href="#companies" @click="closeMenu">For Companies</a>
+      </div>
+    </nav>
+
+    <header class="landing-hero">
+      <div class="landing-hero-inner">
+        <span class="badge rounded-pill mb-3" style="background:rgba(255,255,255,.15);color:#fff;font-weight:500;letter-spacing:.5px;">CAMPUS RECRUITMENT, SIMPLIFIED</span>
+        <h1>Where Talent Meets Opportunity</h1>
+        <p>One platform for your campus placement cell, recruiting companies and students &mdash; approvals, drives, applications and reports, all in one place.</p>
+        <div class="d-flex flex-wrap gap-3 justify-content-center mt-4">
+          <button class="btn btn-light btn-lg fw-semibold px-4" @click="$emit('goto','register','student')"><i class="bi bi-mortarboard me-2"></i>Register as Student</button>
+          <button class="btn btn-outline-light btn-lg fw-semibold px-4" @click="$emit('goto','register','company')"><i class="bi bi-building me-2"></i>Register as Company</button>
+        </div>
+        <p class="mt-4 mb-0" style="opacity:.85;font-size:.9rem;">Already have an account? <a href="#" class="text-white text-decoration-underline" @click.prevent="$emit('goto','login')">Login here</a></p>
+      </div>
+    </header>
+
+    <section id="about" class="landing-section">
+      <div class="landing-container">
+        <h6 class="section-eyebrow">ABOUT</h6>
+        <h2 class="section-title">A Single Home for Campus Placements</h2>
+        <p class="section-lead">Placement Portal replaces scattered spreadsheets and emails with one clean workflow: the placement cell approves companies and drives, companies manage postings and shortlists, and students discover, apply and track their journey &mdash; all from one dashboard.</p>
+        <div class="row g-4 mt-2">
+          <div class="col-md-4">
+            <div class="feature-card">
+              <div class="feature-icon"><i class="bi bi-speedometer2"></i></div>
+              <h5>Live Dashboards</h5>
+              <p>Real-time stats and charts for admins, companies and students.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="feature-card">
+              <div class="feature-icon"><i class="bi bi-shield-check"></i></div>
+              <h5>Verified &amp; Approved</h5>
+              <p>Every company and drive is reviewed by the placement cell before going live.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="feature-card">
+              <div class="feature-icon"><i class="bi bi-file-earmark-bar-graph"></i></div>
+              <h5>Reports &amp; Tracking</h5>
+              <p>Downloadable placement reports and full application history.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="students" class="landing-section landing-section-alt">
+      <div class="landing-container">
+        <h6 class="section-eyebrow">FOR STUDENTS</h6>
+        <h2 class="section-title">How Students Register &amp; Apply</h2>
+        <div class="row g-4 mt-2 align-items-stretch">
+          <div class="col-md-3 col-6">
+            <div class="step-card"><div class="step-num">1</div><h6>Create Account</h6><p>Sign up with your name, roll number, branch, year and CGPA.</p></div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="step-card"><div class="step-num">2</div><h6>Complete Profile</h6><p>Add your phone, skills and upload your resume.</p></div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="step-card"><div class="step-num">3</div><h6>Browse Drives</h6><p>See only the drives you're eligible for &mdash; filtered by CGPA, branch &amp; year.</p></div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="step-card"><div class="step-num">4</div><h6>Apply &amp; Track</h6><p>Apply in one click and track status from Applied to Selected.</p></div>
+          </div>
+        </div>
+        <div class="text-center mt-4">
+          <button class="btn btn-primary px-4" @click="$emit('goto','register','student')">Register as Student <i class="bi bi-arrow-right ms-1"></i></button>
+        </div>
+      </div>
+    </section>
+
+    <section id="companies" class="landing-section">
+      <div class="landing-container">
+        <h6 class="section-eyebrow">FOR COMPANIES</h6>
+        <h2 class="section-title">How Companies Register &amp; Hire</h2>
+        <div class="row g-4 mt-2 align-items-stretch">
+          <div class="col-md-3 col-6">
+            <div class="step-card"><div class="step-num">1</div><h6>Register Profile</h6><p>Create your company profile with HR contact and industry details.</p></div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="step-card"><div class="step-num">2</div><h6>Get Approved</h6><p>The placement cell reviews and approves your company.</p></div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="step-card"><div class="step-num">3</div><h6>Post Drives</h6><p>Create placement drives with eligibility, deadline &amp; salary details.</p></div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="step-card"><div class="step-num">4</div><h6>Review &amp; Hire</h6><p>Shortlist, interview and update applicant status end-to-end.</p></div>
+          </div>
+        </div>
+        <div class="text-center mt-4">
+          <button class="btn btn-primary px-4" @click="$emit('goto','register','company')">Register as Company <i class="bi bi-arrow-right ms-1"></i></button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="landing-footer">
+      <div class="landing-container d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <div><i class="bi bi-mortarboard-fill me-2"></i>PlacementPortal &copy; 2026</div>
+        <div class="small" style="opacity:.7;">Campus Recruitment System</div>
+      </div>
+    </footer>
+  </div>`,
+  setup(props, { emit }) {
+    const menuOpen = ref(false);
+    function closeMenu() { menuOpen.value = false; }
+    return { menuOpen, closeMenu };
   }
 };
 
@@ -265,7 +470,7 @@ const LoginPage = {
           <label class="form-label fw-semibold">Username</label>
           <div class="input-group">
             <span class="input-group-text"><i class="bi bi-person"></i></span>
-            <input v-model="form.username" type="text" class="form-control" placeholder="Enter username" required>
+            <input v-model="form.username" type="text" class="form-control" placeholder="Enter username" autocapitalize="off" autocomplete="username" spellcheck="false" required>
           </div>
         </div>
         <div class="mb-3">
@@ -284,6 +489,7 @@ const LoginPage = {
       </form>
       <hr>
       <p class="text-center mb-0 small">Don't have an account? <a href="#" @click.prevent="$emit('goto','register')">Register here</a></p>
+      <p class="text-center mt-2 mb-0 small"><a href="#" class="text-secondary" @click.prevent="$emit('goto','landing')"><i class="bi bi-arrow-left me-1"></i>Back to Home</a></p>
       <div class="mt-3 p-3 rounded" style="background:#f0f9ff;font-size:.8rem;">
         <strong>Demo Credentials:</strong><br>
         Admin: admin / admin123
@@ -309,6 +515,7 @@ const LoginPage = {
 
 // ==================== REGISTER PAGE ====================
 const RegisterPage = {
+  props: { presetRole: { type: String, default: 'student' } },
   emits: ['register', 'goto'],
   template: `
   <div class="login-page" style="padding:20px 0;">
@@ -328,7 +535,7 @@ const RegisterPage = {
         <div class="row g-2">
           <div class="col-6">
             <label class="form-label fw-semibold small">Username *</label>
-            <input v-model="form.username" type="text" class="form-control form-control-sm" required>
+            <input v-model="form.username" type="text" class="form-control form-control-sm" autocapitalize="off" autocomplete="username" spellcheck="false" required>
           </div>
           <div class="col-6">
             <label class="form-label fw-semibold small">Email *</label>
@@ -400,10 +607,11 @@ const RegisterPage = {
         </button>
       </form>
       <p class="text-center mt-3 mb-0 small">Already have an account? <a href="#" @click.prevent="$emit('goto','login')">Login</a></p>
+      <p class="text-center mt-2 mb-0 small"><a href="#" class="text-secondary" @click.prevent="$emit('goto','landing')"><i class="bi bi-arrow-left me-1"></i>Back to Home</a></p>
     </div>
   </div>`,
   setup(props, { emit }) {
-    const form = reactive({ role: 'student', username: '', email: '', password: '', full_name: '', roll_number: '', department: '', branch: '', year: 1, cgpa: 0, phone: '', company_name: '', hr_name: '', industry: '', website: '', description: '' });
+    const form = reactive({ role: props.presetRole || 'student', username: '', email: '', password: '', full_name: '', roll_number: '', department: '', branch: '', year: 1, cgpa: 0, phone: '', company_name: '', hr_name: '', industry: '', website: '', description: '' });
     const loading = ref(false); const error = ref('');
     async function doRegister() {
       loading.value = true; error.value = '';
@@ -783,7 +991,7 @@ const CompanyDrives = {
     </div>
 
     <!-- Create/Edit Drive Modal -->
-    <div v-if="showModal" class="modal d-block" style="background:rgba(0,0,0,.5);">
+    <div v-if="showModal" class="modal d-block" style="background:rgba(0,0,0,.5);overflow-y:auto;">
       <div class="modal-dialog modal-lg"><div class="modal-content">
         <div class="modal-header"><h5 class="modal-title">{{editingDrive?'Edit':'Create'}} Placement Drive</h5><button class="btn-close" @click="closeModal"></button></div>
         <div class="modal-body">
@@ -814,7 +1022,7 @@ const CompanyDrives = {
     </div>
 
     <!-- Applications Modal -->
-    <div v-if="selectedDrive" class="modal d-block" style="background:rgba(0,0,0,.5);">
+    <div v-if="selectedDrive" class="modal d-block" style="background:rgba(0,0,0,.5);overflow-y:auto;">
       <div class="modal-dialog modal-xl"><div class="modal-content">
         <div class="modal-header"><h5 class="modal-title">Applications - {{selectedDrive.drive_name}}</h5><button class="btn-close" @click="selectedDrive=null"></button></div>
         <div class="modal-body">
@@ -831,18 +1039,43 @@ const CompanyDrives = {
                   <td class="small">{{new Date(a.application_date).toLocaleDateString()}}</td>
                   <td class="small">{{a.remarks||'—'}}</td>
                   <td>
-                    <select class="form-select form-select-sm" style="width:130px;" :value="a.status" @change="updateApp(a.id, $event.target.value)">
-                      <option value="applied">Applied</option>
-                      <option value="shortlisted">Shortlisted</option>
-                      <option value="waiting">Waiting</option>
-                      <option value="selected">Selected</option>
-                      <option value="rejected">Rejected</option>
-                    </select>
+                    <div class="d-flex gap-2">
+                      <button class="btn btn-sm btn-outline-secondary" @click="viewingStudent=a"><i class="bi bi-person-lines-fill"></i></button>
+                      <select class="form-select form-select-sm" style="width:130px;" :value="a.status" @change="updateApp(a.id, $event.target.value)">
+                        <option value="applied">Applied</option>
+                        <option value="shortlisted">Shortlisted</option>
+                        <option value="waiting">Waiting</option>
+                        <option value="selected">Selected</option>
+                        <option value="rejected">Rejected</option>
+                      </select>
+                    </div>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Student Profile Modal -->
+    <div v-if="viewingStudent" class="modal d-block" style="background:rgba(0,0,0,.5);overflow-y:auto;">
+      <div class="modal-dialog"><div class="modal-content">
+        <div class="modal-header"><h5 class="modal-title"><i class="bi bi-person-circle me-2"></i>{{viewingStudent.student_name}}</h5><button class="btn-close" @click="viewingStudent=null"></button></div>
+        <div class="modal-body">
+          <div class="row g-2 small">
+            <div class="col-6"><strong>Roll No:</strong> {{viewingStudent.roll_number||'—'}}</div>
+            <div class="col-6"><strong>Year:</strong> {{viewingStudent.year||'—'}}</div>
+            <div class="col-6"><strong>Department:</strong> {{viewingStudent.student_department||'—'}}</div>
+            <div class="col-6"><strong>Branch:</strong> {{viewingStudent.branch||'—'}}</div>
+            <div class="col-6"><strong>CGPA:</strong> {{viewingStudent.cgpa||'—'}}</div>
+            <div class="col-6"><strong>Phone:</strong> {{viewingStudent.phone||'—'}}</div>
+            <div class="col-12"><strong>Email:</strong> {{viewingStudent.student_email||'—'}}</div>
+            <div class="col-12"><strong>Skills:</strong> {{viewingStudent.skills||'—'}}</div>
+            <div class="col-12"><strong>About:</strong> {{viewingStudent.about||'—'}}</div>
+          </div>
+          <a v-if="viewingStudent.resume_filename" :href="'/api/student/resume/'+viewingStudent.resume_filename" target="_blank" class="btn btn-primary btn-sm mt-3"><i class="bi bi-file-earmark-pdf me-1"></i>View / Download Resume</a>
+          <div v-else class="text-muted small mt-3"><i class="bi bi-exclamation-circle me-1"></i>No resume uploaded</div>
         </div>
       </div></div>
     </div>
@@ -852,6 +1085,7 @@ const CompanyDrives = {
     const showModal = ref(false); const saving = ref(false);
     const editingDrive = ref(null); const selectedDrive = ref(null);
     const driveApps = ref([]); const appLoading = ref(false);
+    const viewingStudent = ref(null);
     const form = reactive({ drive_name:'', job_title:'', job_description:'', eligibility_branch:'', eligibility_cgpa:0, eligibility_year:'', application_deadline:'', salary:'', location:'', interview_type:'In-person' });
 
     async function fetch() {
@@ -860,13 +1094,14 @@ const CompanyDrives = {
       catch(e) { emit('notify',e.message,'danger'); }
       loading.value = false;
     }
-    function editDrive(d) { Object.assign(form, d); editingDrive.value = d; showModal.value = true; }
+    function editDrive(d) { Object.assign(form, d); form.application_deadline = toLocalInputValue(d.application_deadline); editingDrive.value = d; showModal.value = true; }
     function closeModal() { showModal.value = false; editingDrive.value = null; Object.keys(form).forEach(k => { if(k==='interview_type') form[k]='In-person'; else if(k==='eligibility_cgpa') form[k]=0; else form[k]=''; }); }
     async function saveDrive() {
       saving.value = true;
       try {
-        if (editingDrive.value) { await API.put(`/api/company/drives/${editingDrive.value.id}`, form); emit('notify','Drive updated'); }
-        else { await API.post('/api/company/drives', form); emit('notify','Drive created and pending approval'); }
+        const payload = {...form, application_deadline: toUtcIso(form.application_deadline)};
+        if (editingDrive.value) { await API.put(`/api/company/drives/${editingDrive.value.id}`, payload); emit('notify','Drive updated'); }
+        else { await API.post('/api/company/drives', payload); emit('notify','Drive created and pending approval'); }
         closeModal(); fetch();
       } catch(e) { emit('notify',e.message,'danger'); }
       saving.value = false;
@@ -887,7 +1122,7 @@ const CompanyDrives = {
       catch(e) { emit('notify',e.message,'danger'); }
     }
     onMounted(fetch);
-    return { drives, loading, showModal, saving, editingDrive, form, selectedDrive, driveApps, appLoading, fetch, editDrive, closeModal, saveDrive, closeDrive, viewApps, updateApp };
+    return { drives, loading, showModal, saving, editingDrive, form, selectedDrive, driveApps, appLoading, viewingStudent, fetch, editDrive, closeModal, saveDrive, closeDrive, viewApps, updateApp };
   }
 };
 
@@ -908,7 +1143,7 @@ const CompanyApplications = {
       <div v-if="apps.length===0" class="empty-state"><i class="bi bi-inbox"></i><p>No applications</p></div>
       <div v-else class="table-responsive">
         <table class="table table-hover align-middle">
-          <thead><tr><th>Student</th><th>Drive</th><th>Applied On</th><th>Status</th><th>Update Status</th></tr></thead>
+          <thead><tr><th>Student</th><th>Drive</th><th>Applied On</th><th>Status</th><th>Update Status</th><th></th></tr></thead>
           <tbody>
             <tr v-for="a in apps" :key="a.id">
               <td class="fw-semibold">{{a.student_name}}<div class="text-muted small">{{a.student_department}}</div></td>
@@ -920,22 +1155,48 @@ const CompanyApplications = {
                   <option value="applied">Applied</option><option value="shortlisted">Shortlisted</option><option value="waiting">Waiting</option><option value="selected">Selected</option><option value="rejected">Rejected</option>
                 </select>
               </td>
+              <td><button class="btn btn-sm btn-outline-secondary" @click="viewingStudent=a"><i class="bi bi-person-lines-fill"></i></button></td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
+
+    <!-- Student Profile Modal -->
+    <div v-if="viewingStudent" class="modal d-block" style="background:rgba(0,0,0,.5);overflow-y:auto;">
+      <div class="modal-dialog"><div class="modal-content">
+        <div class="modal-header"><h5 class="modal-title"><i class="bi bi-person-circle me-2"></i>{{viewingStudent.student_name}}</h5><button class="btn-close" @click="viewingStudent=null"></button></div>
+        <div class="modal-body">
+          <div class="row g-2 small">
+            <div class="col-6"><strong>Roll No:</strong> {{viewingStudent.roll_number||'—'}}</div>
+            <div class="col-6"><strong>Year:</strong> {{viewingStudent.year||'—'}}</div>
+            <div class="col-6"><strong>Department:</strong> {{viewingStudent.student_department||'—'}}</div>
+            <div class="col-6"><strong>Branch:</strong> {{viewingStudent.branch||'—'}}</div>
+            <div class="col-6"><strong>CGPA:</strong> {{viewingStudent.cgpa||'—'}}</div>
+            <div class="col-6"><strong>Phone:</strong> {{viewingStudent.phone||'—'}}</div>
+            <div class="col-12"><strong>Email:</strong> {{viewingStudent.student_email||'—'}}</div>
+            <div class="col-12"><strong>Skills:</strong> {{viewingStudent.skills||'—'}}</div>
+            <div class="col-12"><strong>About:</strong> {{viewingStudent.about||'—'}}</div>
+          </div>
+          <a v-if="viewingStudent.resume_filename" :href="'/api/student/resume/'+viewingStudent.resume_filename" target="_blank" class="btn btn-primary btn-sm mt-3"><i class="bi bi-file-earmark-pdf me-1"></i>View / Download Resume</a>
+          <div v-else class="text-muted small mt-3"><i class="bi bi-exclamation-circle me-1"></i>No resume uploaded</div>
+        </div>
+      </div></div>
+    </div>
   </div>`,
   setup(props, { emit }) {
     const drives = ref([]); const apps = ref([]); const loading = ref(true); const selectedDriveId = ref('');
+    const viewingStudent = ref(null);
     async function loadApps() {
       if (selectedDriveId.value) {
         apps.value = await API.get(`/api/company/drives/${selectedDriveId.value}/applications`);
       } else {
         const all = [];
         for (const d of drives.value) {
-          const a = await API.get(`/api/company/drives/${d.id}/applications`);
-          all.push(...a);
+          try {
+            const a = await API.get(`/api/company/drives/${d.id}/applications`);
+            all.push(...a);
+          } catch(e) { /* skip drives that fail to load */ }
         }
         apps.value = all;
       }
@@ -949,7 +1210,333 @@ const CompanyApplications = {
       catch(e) { emit('notify',e.message,'danger'); }
       loading.value = false;
     });
-    return { drives, apps, loading, selectedDriveId, loadApps, update };
+    return { drives, apps, loading, selectedDriveId, viewingStudent, loadApps, update };
+  }
+};
+
+// ==================== COMPANY: MEETINGS & OA ====================
+const CompanyOA = {
+  emits: ['notify'],
+  template: `
+  <div>
+    <div class="mb-3">
+      <select v-model="selectedDriveId" class="form-select" style="max-width:340px;" @change="onDriveChange">
+        <option value="">Select a drive…</option>
+        <option v-for="d in drives" :key="d.id" :value="d.id">{{d.drive_name}} — {{d.job_title}}</option>
+      </select>
+    </div>
+
+    <div v-if="!selectedDriveId" class="empty-state card"><i class="bi bi-briefcase"></i><p>Pick a drive above to schedule meetings or an Online Assessment for its applicants.</p></div>
+
+    <div v-else class="row g-3">
+      <!-- Meetings -->
+      <div class="col-lg-6">
+        <div class="card p-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="fw-bold mb-0"><i class="bi bi-camera-video me-2 text-primary"></i>Interview Meetings</h6>
+          </div>
+          <div v-if="loadingApps" class="text-center py-3"><div class="spinner-border spinner-border-sm"></div></div>
+          <div v-else-if="applications.length===0" class="empty-state py-3"><i class="bi bi-inbox"></i><p class="small">No applicants for this drive yet</p></div>
+          <div v-else>
+            <div v-for="a in applications" :key="a.id" class="d-flex align-items-center gap-2 py-2 border-bottom">
+              <div class="avatar" style="width:32px;height:32px;font-size:.8rem;">{{(a.student_name||'?')[0]}}</div>
+              <div style="flex:1;min-width:0;">
+                <div class="fw-semibold small">{{a.student_name}}</div>
+                <div class="text-muted" style="font-size:.72rem;">
+                  <span :class="'badge-status badge-'+a.status">{{a.status}}</span>
+                  <span v-if="meetingsByApp[a.id]" class="ms-2"><i class="bi bi-calendar-check me-1"></i>{{new Date(meetingsByApp[a.id].scheduled_at).toLocaleString()}}</span>
+                </div>
+              </div>
+              <button class="btn btn-sm btn-outline-primary" @click="openMeetingModal(a)">
+                {{meetingsByApp[a.id] ? 'Reschedule' : 'Schedule'}}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OA Schedules -->
+      <div class="col-lg-6">
+        <div class="card p-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="fw-bold mb-0"><i class="bi bi-code-square me-2 text-primary"></i>Online Assessments</h6>
+            <button class="btn btn-sm btn-primary" @click="openOaModal()"><i class="bi bi-plus-lg me-1"></i>Schedule OA</button>
+          </div>
+          <div v-if="loadingOa" class="text-center py-3"><div class="spinner-border spinner-border-sm"></div></div>
+          <div v-else-if="oaList.length===0" class="empty-state py-3"><i class="bi bi-laptop"></i><p class="small">No OA scheduled for this drive yet</p></div>
+          <div v-else>
+            <div v-for="o in oaList" :key="o.id" class="d-flex align-items-center gap-2 py-2 border-bottom">
+              <div style="flex:1;min-width:0;">
+                <div class="fw-semibold small">{{o.title}}</div>
+                <div class="text-muted" style="font-size:.72rem;">
+                  <i class="bi bi-calendar-event me-1"></i>{{new Date(o.scheduled_at).toLocaleString()}} · {{o.duration_minutes}} min
+                  <span class="badge rounded-pill ms-1" :class="o.question_source==='leetcode' ? 'text-bg-info' : 'text-bg-secondary'">{{o.question_source==='leetcode' ? 'LeetCode auto' : 'Company questions'}}</span>
+                  <span v-if="o.question_source==='company'" class="ms-1">({{o.question_count}} added)</span>
+                  <span class="ms-1"><i class="bi bi-people-fill"></i> {{o.completed_count}}/{{o.attempt_count}} submitted</span>
+                </div>
+              </div>
+              <button class="btn btn-sm btn-outline-success" @click="openResultsModal(o)" title="View student results"><i class="bi bi-clipboard-data"></i></button>
+              <button v-if="o.question_source==='company'" class="btn btn-sm btn-outline-secondary" @click="openQuestionsModal(o)"><i class="bi bi-list-check"></i></button>
+              <button class="btn btn-sm btn-outline-danger" @click="deleteOa(o.id)"><i class="bi bi-trash"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Schedule Meeting Modal -->
+    <div v-if="meetingModal.open" class="modal d-block" style="background:rgba(0,0,0,.5);overflow-y:auto;">
+      <div class="modal-dialog"><div class="modal-content">
+        <div class="modal-header"><h5 class="modal-title">Schedule Meeting — {{meetingModal.app && meetingModal.app.student_name}}</h5><button class="btn-close" @click="meetingModal.open=false"></button></div>
+        <div class="modal-body">
+          <div class="mb-3"><label class="form-label fw-semibold small">Title</label><input v-model="meetingForm.title" class="form-control" placeholder="e.g. Technical Interview"></div>
+          <div class="mb-3"><label class="form-label fw-semibold small">Date & Time *</label><input v-model="meetingForm.scheduled_at" type="datetime-local" class="form-control" required></div>
+          <div class="mb-3"><label class="form-label fw-semibold small">Duration (minutes)</label><input v-model="meetingForm.duration_minutes" type="number" min="10" class="form-control"></div>
+          <div class="mb-3"><label class="form-label fw-semibold small">Meeting Link</label><input v-model="meetingForm.meeting_link" class="form-control" placeholder="https://meet.google.com/..."></div>
+          <div class="mb-1"><label class="form-label fw-semibold small">Notes</label><textarea v-model="meetingForm.notes" class="form-control" rows="2"></textarea></div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" @click="meetingModal.open=false">Cancel</button>
+          <button class="btn btn-primary" @click="saveMeeting" :disabled="savingMeeting"><span v-if="savingMeeting" class="spinner-border spinner-border-sm me-1"></span>Save</button>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Schedule OA Modal -->
+    <div v-if="oaModal.open" class="modal d-block" style="background:rgba(0,0,0,.5);overflow-y:auto;">
+      <div class="modal-dialog"><div class="modal-content">
+        <div class="modal-header"><h5 class="modal-title">Schedule Online Assessment</h5><button class="btn-close" @click="oaModal.open=false"></button></div>
+        <div class="modal-body">
+          <div class="mb-3"><label class="form-label fw-semibold small">Title *</label><input v-model="oaForm.title" class="form-control" placeholder="e.g. Round 1 - Coding Test" required></div>
+          <div class="mb-3"><label class="form-label fw-semibold small">Date & Time *</label><input v-model="oaForm.scheduled_at" type="datetime-local" class="form-control" required></div>
+          <div class="mb-3"><label class="form-label fw-semibold small">Duration (minutes)</label><input v-model="oaForm.duration_minutes" type="number" min="15" class="form-control"></div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold small">Questions</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" value="leetcode" v-model="oaForm.question_source" id="srcLc">
+              <label class="form-check-label small" for="srcLc">Auto-pick from LeetCode (1 Easy, 1 Medium, 1 Hard)</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" value="company" v-model="oaForm.question_source" id="srcCo">
+              <label class="form-check-label small" for="srcCo">I'll add my own questions (any difficulty left unfilled auto-fills from LeetCode)</label>
+            </div>
+          </div>
+          <div class="mb-1"><label class="form-label fw-semibold small">Instructions (shown to students)</label><textarea v-model="oaForm.instructions" class="form-control" rows="2"></textarea></div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" @click="oaModal.open=false">Cancel</button>
+          <button class="btn btn-primary" @click="saveOa" :disabled="savingOa"><span v-if="savingOa" class="spinner-border spinner-border-sm me-1"></span>Schedule</button>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Manage Questions Modal -->
+    <div v-if="questionsModal.open" class="modal d-block" style="background:rgba(0,0,0,.5);overflow-y:auto;">
+      <div class="modal-dialog modal-lg"><div class="modal-content">
+        <div class="modal-header"><h5 class="modal-title">Questions — {{questionsModal.oa && questionsModal.oa.title}}</h5><button class="btn-close" @click="questionsModal.open=false"></button></div>
+        <div class="modal-body">
+          <div class="row g-2 align-items-end mb-3">
+            <div class="col-3"><label class="form-label small fw-semibold">Difficulty</label>
+              <select v-model="qForm.difficulty" class="form-select form-select-sm">
+                <option value="easy">Easy</option><option value="medium">Medium</option><option value="hard">Hard</option>
+              </select>
+            </div>
+            <div class="col-4"><label class="form-label small fw-semibold">Title</label><input v-model="qForm.title" class="form-control form-control-sm"></div>
+            <div class="col-3"><label class="form-label small fw-semibold">Link</label><input v-model="qForm.link" class="form-control form-control-sm" placeholder="https://..."></div>
+            <div class="col-2"><button class="btn btn-sm btn-primary w-100" @click="addQuestion">Add</button></div>
+            <div class="col-12"><textarea v-model="qForm.description" class="form-control form-control-sm" rows="2" placeholder="Optional description"></textarea></div>
+          </div>
+          <div v-if="questions.length===0" class="empty-state py-3"><i class="bi bi-journal-x"></i><p class="small">No questions added yet — missing difficulties will be auto-filled from LeetCode when a student starts the OA.</p></div>
+          <table v-else class="table table-sm align-middle">
+            <thead><tr><th>Difficulty</th><th>Title</th><th>Link</th><th></th></tr></thead>
+            <tbody>
+              <tr v-for="q in questions" :key="q.id">
+                <td><span :class="'badge-status badge-diff-'+q.difficulty">{{q.difficulty}}</span></td>
+                <td class="small">{{q.title}}</td>
+                <td class="small"><a v-if="q.link" :href="q.link" target="_blank">Open ↗</a></td>
+                <td><button class="btn btn-sm btn-outline-danger" @click="removeQuestion(q.id)"><i class="bi bi-trash"></i></button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Results Modal -->
+    <div v-if="resultsModal.open" class="modal d-block" style="background:rgba(0,0,0,.5);overflow-y:auto;">
+      <div class="modal-dialog modal-xl"><div class="modal-content">
+        <div class="modal-header"><h5 class="modal-title"><i class="bi bi-clipboard-data me-2"></i>Results — {{resultsModal.oa && resultsModal.oa.title}}</h5><button class="btn-close" @click="resultsModal.open=false; expandedAttempt=null"></button></div>
+        <div class="modal-body">
+          <div v-if="loadingResults" class="text-center py-4"><div class="spinner-border"></div></div>
+          <div v-else-if="attempts.length===0" class="empty-state py-3"><i class="bi bi-inbox"></i><p class="small">No students have started this OA yet</p></div>
+          <div v-else>
+            <table class="table table-hover align-middle">
+              <thead><tr><th>Student</th><th>Roll No</th><th>CGPA</th><th>Status</th><th>Score</th><th>Submitted</th><th></th></tr></thead>
+              <tbody>
+                <template v-for="at in attempts" :key="at.id">
+                  <tr>
+                    <td class="fw-semibold">{{at.student_name}}<div class="text-muted small">{{at.branch}}</div></td>
+                    <td class="small">{{at.roll_number||'—'}}</td>
+                    <td class="small">{{at.cgpa||'—'}}</td>
+                    <td><span :class="'badge-status badge-'+(at.status==='completed'?'selected':(at.status==='in_progress'?'applied':'pending'))">{{at.status.replace('_',' ')}}</span></td>
+                    <td class="fw-semibold">
+                      <span v-if="at.status==='completed'">{{at.score}}/{{at.total_questions}}</span>
+                      <span v-else class="text-muted">—</span>
+                    </td>
+                    <td class="small">{{at.completed_at ? new Date(at.completed_at).toLocaleString() : '—'}}</td>
+                    <td>
+                      <button v-if="at.status==='completed'" class="btn btn-sm btn-outline-primary" @click="expandedAttempt = expandedAttempt===at.id ? null : at.id">
+                        {{expandedAttempt===at.id ? 'Hide' : 'View Code'}}
+                      </button>
+                    </td>
+                  </tr>
+                  <tr v-if="expandedAttempt===at.id">
+                    <td colspan="7" style="background:#f8fafc;">
+                      <div class="row g-3 py-2">
+                        <div class="col-md-4" v-for="r in at.responses" :key="r.title">
+                          <div class="oa-question-card h-100">
+                            <div class="d-flex justify-content-between align-items-start">
+                              <span :class="'badge-status badge-diff-'+r.difficulty.toLowerCase()">{{r.difficulty}}</span>
+                              <span class="badge" :class="r.status==='solved' ? 'text-bg-success' : (r.status==='attempted' ? 'text-bg-warning' : 'text-bg-secondary')">{{r.status}}</span>
+                            </div>
+                            <div class="fw-semibold small mt-2">{{r.title}}</div>
+                            <a v-if="r.link" :href="r.link" target="_blank" class="small">Open on LeetCode ↗</a>
+                            <div v-if="r.language" class="text-muted small mt-1">Language: {{r.language}}</div>
+                            <pre v-if="r.code" class="small mt-2 p-2 bg-white border rounded" style="max-height:220px;overflow:auto;white-space:pre-wrap;">{{r.code}}</pre>
+                            <div v-else class="text-muted small mt-2 fst-italic">No code submitted</div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div></div>
+    </div>
+  </div>`,
+  setup(props, { emit }) {
+    const drives = ref([]); const selectedDriveId = ref('');
+    const applications = ref([]); const loadingApps = ref(false);
+    const oaList = ref([]); const loadingOa = ref(false);
+    const meetingsByApp = reactive({});
+
+    const meetingModal = reactive({ open: false, app: null });
+    const meetingForm = reactive({ title: 'Interview', scheduled_at: '', duration_minutes: 30, meeting_link: '', notes: '' });
+    const savingMeeting = ref(false);
+
+    const oaModal = reactive({ open: false });
+    const oaForm = reactive({ title: '', scheduled_at: '', duration_minutes: 90, question_source: 'leetcode', instructions: '' });
+    const savingOa = ref(false);
+
+    const questionsModal = reactive({ open: false, oa: null });
+    const questions = ref([]);
+    const qForm = reactive({ difficulty: 'easy', title: '', link: '', description: '' });
+
+    const resultsModal = reactive({ open: false, oa: null });
+    const attempts = ref([]); const loadingResults = ref(false);
+    const expandedAttempt = ref(null);
+
+    async function openResultsModal(o) {
+      resultsModal.oa = o; resultsModal.open = true; expandedAttempt.value = null;
+      loadingResults.value = true;
+      try { attempts.value = await API.get(`/api/company/oa/${o.id}/attempts`); }
+      catch(e) { emit('notify', e.message, 'danger'); }
+      loadingResults.value = false;
+    }
+
+    async function loadDrives() {
+      try { drives.value = await API.get('/api/company/drives'); } catch(e) { emit('notify', e.message, 'danger'); }
+    }
+    async function onDriveChange() {
+      if (!selectedDriveId.value) return;
+      loadingApps.value = true; loadingOa.value = true;
+      try {
+        const [apps, meetings, oas] = await Promise.all([
+          API.get(`/api/company/drives/${selectedDriveId.value}/applications`),
+          API.get(`/api/company/drives/${selectedDriveId.value}/meetings`),
+          API.get(`/api/company/drives/${selectedDriveId.value}/oa`),
+        ]);
+        applications.value = apps;
+        Object.keys(meetingsByApp).forEach(k => delete meetingsByApp[k]);
+        meetings.forEach(m => meetingsByApp[m.application_id] = m);
+        oaList.value = oas;
+      } catch(e) { emit('notify', e.message, 'danger'); }
+      loadingApps.value = false; loadingOa.value = false;
+    }
+
+    function openMeetingModal(a) {
+      meetingModal.app = a; meetingModal.open = true;
+      const existing = meetingsByApp[a.id];
+      Object.assign(meetingForm, existing ? {
+        title: existing.title, scheduled_at: toLocalInputValue(existing.scheduled_at),
+        duration_minutes: existing.duration_minutes, meeting_link: existing.meeting_link, notes: existing.notes
+      } : { title: 'Interview', scheduled_at: '', duration_minutes: 30, meeting_link: '', notes: '' });
+    }
+    async function saveMeeting() {
+      if (!meetingForm.scheduled_at) { emit('notify','Pick a date & time','danger'); return; }
+      savingMeeting.value = true;
+      try {
+        const payload = { ...meetingForm, scheduled_at: toUtcIso(meetingForm.scheduled_at) };
+        await API.post(`/api/company/applications/${meetingModal.app.id}/meeting`, payload);
+        emit('notify', 'Meeting scheduled'); meetingModal.open = false; onDriveChange();
+      } catch(e) { emit('notify', e.message, 'danger'); }
+      savingMeeting.value = false;
+    }
+
+    function openOaModal() {
+      Object.assign(oaForm, { title: '', scheduled_at: '', duration_minutes: 90, question_source: 'leetcode', instructions: '' });
+      oaModal.open = true;
+    }
+    async function saveOa() {
+      if (!oaForm.title || !oaForm.scheduled_at) { emit('notify','Title and date/time are required','danger'); return; }
+      savingOa.value = true;
+      try {
+        const payload = { ...oaForm, scheduled_at: toUtcIso(oaForm.scheduled_at) };
+        await API.post(`/api/company/drives/${selectedDriveId.value}/oa`, payload);
+        emit('notify', 'OA scheduled'); oaModal.open = false; onDriveChange();
+      } catch(e) { emit('notify', e.message, 'danger'); }
+      savingOa.value = false;
+    }
+    async function deleteOa(id) {
+      if (!confirm('Delete this OA schedule?')) return;
+      try { await API.del(`/api/company/oa/${id}`); emit('notify','OA deleted'); onDriveChange(); }
+      catch(e) { emit('notify', e.message, 'danger'); }
+    }
+
+    async function openQuestionsModal(o) {
+      questionsModal.oa = o; questionsModal.open = true;
+      try { questions.value = await API.get(`/api/company/oa/${o.id}/questions`); }
+      catch(e) { emit('notify', e.message, 'danger'); }
+    }
+    async function addQuestion() {
+      if (!qForm.title) { emit('notify','Question title is required','danger'); return; }
+      try {
+        await API.post(`/api/company/oa/${questionsModal.oa.id}/questions`, qForm);
+        Object.assign(qForm, { difficulty: 'easy', title: '', link: '', description: '' });
+        questions.value = await API.get(`/api/company/oa/${questionsModal.oa.id}/questions`);
+        onDriveChange();
+      } catch(e) { emit('notify', e.message, 'danger'); }
+    }
+    async function removeQuestion(qid) {
+      try {
+        await API.del(`/api/company/oa/${questionsModal.oa.id}/questions/${qid}`);
+        questions.value = questions.value.filter(q => q.id !== qid);
+        onDriveChange();
+      } catch(e) { emit('notify', e.message, 'danger'); }
+    }
+
+    onMounted(loadDrives);
+    return {
+      drives, selectedDriveId, applications, loadingApps, oaList, loadingOa, meetingsByApp,
+      meetingModal, meetingForm, savingMeeting, oaModal, oaForm, savingOa,
+      questionsModal, questions, qForm,
+      resultsModal, attempts, loadingResults, expandedAttempt, openResultsModal,
+      onDriveChange, openMeetingModal, saveMeeting, openOaModal, saveOa, deleteOa,
+      openQuestionsModal, addQuestion, removeQuestion,
+    };
   }
 };
 
@@ -1096,7 +1683,7 @@ const StudentDrives = {
     </div>
 
     <!-- Detail Modal -->
-    <div v-if="showDetail && selected" class="modal d-block" style="background:rgba(0,0,0,.5);">
+    <div v-if="showDetail && selected" class="modal d-block" style="background:rgba(0,0,0,.5);overflow-y:auto;">
       <div class="modal-dialog modal-lg"><div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">{{selected.drive_name}}</h5>
@@ -1208,6 +1795,148 @@ const StudentApplications = {
   }
 };
 
+// ==================== STUDENT: MEETINGS & OA ====================
+const StudentOA = {
+  emits: ['notify'],
+  template: `
+  <div>
+    <div class="row g-3 mb-4">
+      <div class="col-12">
+        <div class="card p-4">
+          <h6 class="fw-bold mb-3"><i class="bi bi-camera-video me-2 text-primary"></i>Upcoming Meetings</h6>
+          <div v-if="loadingMeetings" class="text-center py-3"><div class="spinner-border spinner-border-sm"></div></div>
+          <div v-else-if="meetings.length===0" class="empty-state py-3"><i class="bi bi-calendar-x"></i><p class="small">No meetings scheduled yet</p></div>
+          <div v-else class="row g-2">
+            <div v-for="m in meetings" :key="m.id" class="col-md-6">
+              <div class="card p-3">
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <div class="fw-semibold small">{{m.title}}</div>
+                    <div class="text-muted" style="font-size:.78rem;">{{m.company_name}} · {{m.drive_name}}</div>
+                  </div>
+                  <span :class="'badge-status badge-'+(m.status==='scheduled'?'applied':m.status)">{{m.status}}</span>
+                </div>
+                <div class="small mt-2"><i class="bi bi-calendar-event me-1"></i>{{new Date(m.scheduled_at).toLocaleString()}} ({{m.duration_minutes}} min)</div>
+                <a v-if="m.meeting_link" :href="m.meeting_link" target="_blank" class="btn btn-sm btn-primary mt-2"><i class="bi bi-camera-video me-1"></i>Join Meeting</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="!activeAttempt" class="card p-4">
+      <h6 class="fw-bold mb-3"><i class="bi bi-code-square me-2 text-primary"></i>Online Assessments</h6>
+      <div v-if="loadingOa" class="text-center py-3"><div class="spinner-border spinner-border-sm"></div></div>
+      <div v-else-if="oaList.length===0" class="empty-state py-3"><i class="bi bi-laptop"></i><p class="small">No OA scheduled for your applications yet</p></div>
+      <div v-else class="row g-3">
+        <div v-for="o in oaList" :key="o.id" class="col-md-6">
+          <div class="card p-3" :class="o.attempt_status==='completed' ? '' : (o.is_open ? 'oa-window-open' : (o.is_upcoming ? 'oa-window-upcoming' : 'oa-window-expired'))">
+            <div class="d-flex justify-content-between align-items-start">
+              <div><div class="fw-semibold">{{o.title}}</div><div class="text-muted small">{{o.company_name}} · {{o.drive_name}}</div></div>
+              <span v-if="o.attempt_status==='completed'" class="badge-status badge-selected">Completed — {{o.score}}/{{o.total_questions}}</span>
+              <span v-else-if="o.is_open" class="badge-status badge-approved">Live now</span>
+              <span v-else-if="o.is_upcoming" class="badge-status badge-pending">Upcoming</span>
+              <span v-else class="badge-status badge-rejected">Closed</span>
+            </div>
+            <div class="small text-muted mt-2">
+              <div><i class="bi bi-calendar-event me-1"></i>{{new Date(o.scheduled_at).toLocaleString()}}</div>
+              <div><i class="bi bi-hourglass-split me-1"></i>{{o.duration_minutes}} minutes</div>
+              <div v-if="o.instructions"><i class="bi bi-info-circle me-1"></i>{{o.instructions}}</div>
+            </div>
+            <button v-if="o.attempt_status==='completed'" class="btn btn-sm btn-outline-secondary mt-3" disabled><i class="bi bi-check-circle me-1"></i>Submitted</button>
+            <button v-else-if="o.is_open" class="btn btn-sm btn-primary mt-3" :disabled="starting===o.id" @click="startOa(o)">
+              <span v-if="starting===o.id" class="spinner-border spinner-border-sm me-1"></span>{{o.attempt_status==='in_progress' ? 'Resume' : 'Start'}}
+            </button>
+            <button v-else class="btn btn-sm btn-outline-secondary mt-3" disabled>{{o.is_upcoming ? 'Not open yet' : 'Window closed'}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active OA test view -->
+    <div v-else class="card p-4">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h6 class="fw-bold mb-0"><i class="bi bi-shield-check me-2 text-success"></i>{{activeAttempt.oa.title}}</h6>
+        <span class="badge text-bg-success">Verified & In Progress</span>
+      </div>
+      <p class="text-muted small">Solve each question on LeetCode using the links below. For each one, mark whether you solved it and paste the code you wrote — this is what your company will review. Your attempt started at {{new Date(activeAttempt.started_at).toLocaleTimeString()}}.</p>
+      <div class="row g-3 mt-1">
+        <div class="col-md-4" v-for="(q,i) in activeAttempt.questions" :key="q.title">
+          <div class="oa-question-card h-100 d-flex flex-column">
+            <span :class="'badge-status badge-diff-'+q.difficulty.toLowerCase()">{{q.difficulty}}</span>
+            <div class="fw-semibold mt-2">{{q.title}}</div>
+            <p v-if="q.description" class="small text-muted mt-1">{{q.description}}</p>
+            <a v-if="q.link" :href="q.link" target="_blank" class="btn btn-sm btn-outline-primary mt-2"><i class="bi bi-box-arrow-up-right me-1"></i>Open on LeetCode</a>
+            <div class="mt-3">
+              <label class="form-label small fw-semibold mb-1">Status</label>
+              <select v-model="responses[i].status" class="form-select form-select-sm">
+                <option value="solved">✅ Solved</option>
+                <option value="attempted">🟡 Attempted (not solved)</option>
+                <option value="skipped">⬜ Skipped</option>
+              </select>
+            </div>
+            <div class="mt-2">
+              <label class="form-label small fw-semibold mb-1">Language</label>
+              <input v-model="responses[i].language" class="form-control form-control-sm" placeholder="e.g. Python, Java, C++">
+            </div>
+            <div class="mt-2 flex-grow-1">
+              <label class="form-label small fw-semibold mb-1">Paste your code</label>
+              <textarea v-model="responses[i].code" class="form-control form-control-sm" rows="6" style="font-family:monospace;font-size:.78rem;" placeholder="Paste the code you submitted on LeetCode..."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-success mt-4" :disabled="submitting" @click="submitOa"><span v-if="submitting" class="spinner-border spinner-border-sm me-1"></span>Submit OA</button>
+    </div>
+  </div>`,
+  setup(props, { emit }) {
+    const meetings = ref([]); const loadingMeetings = ref(true);
+    const oaList = ref([]); const loadingOa = ref(true);
+    const starting = ref(null); const submitting = ref(false);
+    const activeAttempt = ref(null);
+    const responses = ref([]);
+
+    async function loadMeetings() {
+      loadingMeetings.value = true;
+      try { meetings.value = await API.get('/api/student/meetings'); }
+      catch(e) { emit('notify', e.message, 'danger'); }
+      loadingMeetings.value = false;
+    }
+    async function loadOa() {
+      loadingOa.value = true;
+      try { oaList.value = await API.get('/api/student/oa'); }
+      catch(e) { emit('notify', e.message, 'danger'); }
+      loadingOa.value = false;
+    }
+    async function startOa(o) {
+      starting.value = o.id;
+      try {
+        // Verification step (eligibility + timing) happens server-side.
+        const r = await API.post(`/api/student/oa/${o.id}/start`);
+        activeAttempt.value = r;
+        responses.value = r.questions.map(q => ({ title: q.title, status: 'skipped', code: '', language: '' }));
+        emit('notify', 'Verified! Your 3 questions are ready.');
+      } catch(e) { emit('notify', e.message, 'danger'); }
+      starting.value = null;
+    }
+    async function submitOa() {
+      const unmarked = responses.value.filter(r => r.status === 'solved' && !r.code.trim());
+      if (unmarked.length && !confirm('Some questions marked "Solved" have no code pasted in. Submit anyway?')) return;
+      submitting.value = true;
+      try {
+        const r = await API.post(`/api/student/oa/${activeAttempt.value.oa.id}/complete`, { responses: responses.value });
+        emit('notify', `OA submitted — you solved ${r.score}/${r.total_questions}`);
+        activeAttempt.value = null; responses.value = [];
+        loadOa();
+      } catch(e) { emit('notify', e.message, 'danger'); }
+      submitting.value = false;
+    }
+    onMounted(() => { loadMeetings(); loadOa(); });
+    return { meetings, loadingMeetings, oaList, loadingOa, starting, submitting, activeAttempt, responses, startOa, submitOa };
+  }
+};
+
 // ==================== STUDENT HISTORY ====================
 const StudentHistory = {
   emits: ['notify'],
@@ -1270,7 +1999,7 @@ const StudentCompanies = {
     </div>
 
     <!-- Company Detail Modal -->
-    <div v-if="selectedCompany" class="modal d-block" style="background:rgba(0,0,0,.5);">
+    <div v-if="selectedCompany" class="modal d-block" style="background:rgba(0,0,0,.5);overflow-y:auto;">
       <div class="modal-dialog modal-lg"><div class="modal-content">
         <div class="modal-header"><h5 class="modal-title">{{selectedCompany.company_name}}</h5><button class="btn-close" @click="selectedCompany=null"></button></div>
         <div class="modal-body">
@@ -1396,7 +2125,7 @@ const StudentProfile = {
 const app = createApp(App);
 
 // Register all components
-const components = { LoginPage, RegisterPage, AdminDashboard, AdminCompanies, AdminStudents, AdminDrives, AdminApplications, AdminReports, CompanyDashboard, CompanyDrives, CompanyApplications, CompanyProfile, StudentDashboard, StudentDrives, StudentApplications, StudentHistory, StudentCompanies, StudentProfile };
+const components = { LandingPage, LoginPage, RegisterPage, AdminDashboard, AdminCompanies, AdminStudents, AdminDrives, AdminApplications, AdminReports, CompanyDashboard, CompanyDrives, CompanyApplications, CompanyOA, CompanyProfile, StudentDashboard, StudentDrives, StudentApplications, StudentOA, StudentHistory, StudentCompanies, StudentProfile };
 Object.entries(components).forEach(([name, comp]) => app.component(name, comp));
 
 app.mount('#app');

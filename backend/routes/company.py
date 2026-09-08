@@ -87,6 +87,11 @@ def update_drive(did):
     drive = row_to_dict(db.execute("SELECT * FROM placement_drives WHERE id=? AND company_id=?", (did, c['id'])).fetchone())
     if not drive: db.close(); return jsonify({'error':'Not found'}), 404
     data = request.get_json()
+    # Only allow company to close a drive; status transitions (approve/reject) go through admin
+    allowed_statuses = {'closed'}
+    new_status = data.get('status', drive['status'])
+    if new_status not in allowed_statuses:
+        new_status = drive['status']
     db.execute("""UPDATE placement_drives SET
         drive_name=?, job_title=?, job_description=?, eligibility_branch=?,
         eligibility_cgpa=?, eligibility_year=?, application_deadline=?,
@@ -102,7 +107,7 @@ def update_drive(did):
          data.get('salary', drive['salary']),
          data.get('location', drive['location']),
          data.get('interview_type', drive['interview_type']),
-         data.get('status', drive['status']), did))
+         new_status, did))
     db.commit()
     row = row_to_dict(db.execute("SELECT * FROM placement_drives WHERE id=?", (did,)).fetchone())
     row['company_name'] = c['company_name']
@@ -119,16 +124,39 @@ def get_drive_applications(did):
     drive = db.execute("SELECT id FROM placement_drives WHERE id=? AND company_id=?", (did, c['id'])).fetchone()
     if not drive: db.close(); return jsonify({'error':'Not found'}), 404
     rows = rows_to_list(db.execute("""
-        SELECT a.*, sp.full_name AS student_name, sp.department AS student_department,
-               sp.branch, sp.cgpa, sp.roll_number,
+        SELECT a.*, sp.id AS student_profile_id, sp.full_name AS student_name,
+               sp.department AS student_department, sp.branch, sp.cgpa, sp.roll_number,
+               sp.year, sp.phone, sp.skills, sp.about, sp.resume_filename, u.email AS student_email,
                pd.drive_name, pd.job_title, pd.interview_type, cp.company_name
         FROM applications a
         JOIN student_profiles sp ON a.student_id=sp.id
+        JOIN users u ON sp.user_id=u.id
         JOIN placement_drives pd ON a.drive_id=pd.id
         JOIN company_profiles cp ON pd.company_id=cp.id
         WHERE a.drive_id=?""", (did,)).fetchall())
     db.close()
     return jsonify(rows)
+
+@company_bp.route('/students/<int:sid>', methods=['GET'])
+@role_required('company')
+def get_student_detail(sid):
+    """Full profile of a student, only visible to a company the student
+    has actually applied to (prevents companies browsing all students)."""
+    u = request.current_user
+    db = get_db()
+    c = _get_company(u['id'], db)
+    allowed = db.execute("""
+        SELECT 1 FROM applications a
+        JOIN placement_drives pd ON a.drive_id = pd.id
+        WHERE a.student_id=? AND pd.company_id=?""", (sid, c['id'])).fetchone()
+    if not allowed:
+        db.close(); return jsonify({'error': 'Not found'}), 404
+    s = row_to_dict(db.execute("""
+        SELECT sp.*, u.email FROM student_profiles sp JOIN users u ON sp.user_id=u.id
+        WHERE sp.id=?""", (sid,)).fetchone())
+    db.close()
+    if not s: return jsonify({'error': 'Not found'}), 404
+    return jsonify(s)
 
 @company_bp.route('/applications/<int:aid>', methods=['PUT'])
 @role_required('company')
